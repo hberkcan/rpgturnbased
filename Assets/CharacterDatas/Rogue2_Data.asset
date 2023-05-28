@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727f00c8159cd654888eb303ac9cd5fe, type: 3}
+  m_Name: Rogue2_Data
+  m_EditorClassIdentifier: 
+  characterPrefab: {fileID: 6123550037039396467, guid: 724315939358da94382316c4df9be405, type: 3}
+  characterIcon: {fileID: 3926609367448832269, guid: 7bd2d7b426bd9be4b8c9fc5bf950bf11, type: 3}
+  character:
+    Name: Rogue2
+    Stats:
+    - Type: 0
+      Value: 100
+    - Type: 1
+      Value: 10
+    Experience: 0
+    Level: 1
+  runtimeCharacter:
+    Name: Rogue2
+    Stats:
+    - Type: 0
+      Value: 100
+    - Type: 1
+      Value: 10
+    Experience: 0
+    Level: 1
