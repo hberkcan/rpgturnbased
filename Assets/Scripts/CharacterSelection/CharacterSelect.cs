@@ -42,14 +42,24 @@ public class CharacterSelect : MonoBehaviour, IClickable
                 return;
             }
 
-            characterSelectionManager.SelectCharacter(characterIndex);
-            behaviour.OnSelected();
+            Select();
         }
         else
         {
-            characterSelectionManager.DeselectCharacter(characterIndex);
-            behaviour.OnDeselected();
+            DeSelect();
         }
+    }
+
+    public void Select()
+    {
+        characterSelectionManager.SelectCharacter(characterIndex);
+        behaviour.OnSelected();
+    }
+
+    public void DeSelect()
+    {
+        characterSelectionManager.DeselectCharacter(characterIndex);
+        behaviour.OnDeselected();
     }
 
     public void OnLongPress()

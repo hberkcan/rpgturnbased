@@ -56,7 +56,7 @@ public class Clickable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
                 foreach (IClickable clickable in GetComponents<Clickable>())
                 {
-                    clickable.OnClick();
+                    clickable.OnLongPress();
                 }
 
                 Debug.Log("Long Press");

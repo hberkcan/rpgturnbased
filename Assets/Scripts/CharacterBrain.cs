@@ -15,6 +15,7 @@ public class CharacterBrain : MonoBehaviour, IClickable
 
     public void OnLongPress()
     {
+        //show stats
     }
 
     public void Init(ref Character character)

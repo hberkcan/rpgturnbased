@@ -11,7 +11,9 @@ public class StartState : BattleState
     public override IEnumerator Execute()
     {
         Debug.Log("Battle Started");
-        yield return new WaitForSeconds(2f);
+        float wait = 2f;
+        battleManager.BattleHUD.StartCountdown(wait);
+        yield return new WaitForSeconds(wait);
         battleManager.SetState(BattleStateType.Ready);
     }
 }

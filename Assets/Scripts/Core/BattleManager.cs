@@ -18,6 +18,9 @@ public class BattleManager : MonoBehaviour, IMessagingSubscriber<StartBattleEven
 
     [SerializeField] private Vector3[] spawnPositions;
 
+    [SerializeField] private BattleHUD battleHUD;
+    public BattleHUD BattleHUD => battleHUD;
+
     private void Awake()
     {
         battleStates = new Dictionary<BattleStateType, BattleState>(4)
@@ -54,9 +57,6 @@ public class BattleManager : MonoBehaviour, IMessagingSubscriber<StartBattleEven
             character.Clicked = HeroClicked;
             playerCharacters.Add(character.gameObject);
         }
-
-        //PlayerGO = Instantiate(playerPrefab, Vector2.left * 20f, Quaternion.identity);
-        //PlayerGO.GetComponent<Character>().Clicked = HeroClicked;
 
         EnemyGO = Instantiate(enemyPrefab, Vector2.right * 20f + Vector2.down * 2.5f, Quaternion.identity);
         EnemyGO.transform.Rotate(0f, 180f, 0f);
