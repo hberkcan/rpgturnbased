@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterStat : MonoBehaviour
 {
-    [SerializeField] CharacterData characterData;
+    [SerializeField] CharacterDataSO characterData;
     private Dictionary<StatType, Stat> stats;
 
     private void Awake()
@@ -14,9 +14,9 @@ public class CharacterStat : MonoBehaviour
 
     private void Init()
     {
-        stats = new Dictionary<StatType, Stat>(characterData.character.Stats.Length);
+        stats = new Dictionary<StatType, Stat>(characterData.BaseData.Stats.Length);
 
-        foreach (var stat in characterData.character.Stats)
+        foreach (var stat in characterData.BaseData.Stats)
         {
             stats.Add(stat.Type, stat);
         }

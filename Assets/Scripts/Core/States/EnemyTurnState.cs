@@ -10,10 +10,9 @@ public class EnemyTurnState : BattleState
 
     public override IEnumerator Execute()
     {
-        CharacterAttack attacker = battleManager.EnemyGO.GetComponent<CharacterAttack>();
-        CharacterHealth target = battleManager.GetRandomPlayerCharacter().GetComponent<CharacterHealth>();
+        CharacterHealth target = battleManager.GetRandomPlayerCharacter().CharacterHealth;
 
-        yield return attacker.AttackBehaviour(target);
+        yield return battleManager.EnemyCharacter.CharacterAttack.AttackBehaviour(target);
         Debug.Log("Enemy Attacked");
 
         if (target.IsDead)

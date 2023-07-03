@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public abstract class BaseAttackSkill : ScriptableObject, IAttack
+public abstract class BaseAttackSkill : ScriptableObject
 {
     [SerializeField] protected float attackDuration;
-    public AnimationClip attackAnimationClip;
-    public abstract IEnumerator AttackBehaviour(CharacterAttack attacker, CharacterHealth target);
+    [SerializeField] protected AnimationClip attackAnimationClip;
+    public abstract IEnumerator AttackBehaviour(CharacterAttack attacker, Animator attackerAnimator, CharacterHealth target);
+
+    public AnimationClip GetAnimationClip()
+    {
+        return attackAnimationClip;
+    }
+
+    protected abstract Vector2 GetAttackPosition(Transform target);
 }

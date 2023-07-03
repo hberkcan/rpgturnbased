@@ -9,26 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 727f00c8159cd654888eb303ac9cd5fe, type: 3}
+  m_Script: {fileID: 11500000, guid: b7657f8b8c102b44fa4f07e7e283b6c3, type: 3}
   m_Name: Rogue5_Data
   m_EditorClassIdentifier: 
-  characterPrefab: {fileID: 6123550037039396467, guid: c8472f088e9712442b46db06965083d8, type: 3}
-  characterIcon: {fileID: 220862970461221727, guid: 82ac209689c58b141b81d9fe42e67158, type: 3}
-  character:
+  CharacterPrefab: {fileID: 6123550037039396467, guid: c8472f088e9712442b46db06965083d8, type: 3}
+  CharacterIcon: {fileID: 220862970461221727, guid: 82ac209689c58b141b81d9fe42e67158, type: 3}
+  BaseData:
     Name: Rogue5
     Stats:
     - Type: 0
       Value: 100
     - Type: 1
-      Value: 10
-    Experience: 0
-    Level: 1
-  runtimeCharacter:
-    Name: Rogue5
-    Stats:
-    - Type: 0
-      Value: 100
-    - Type: 1
-      Value: 10
+      Value: 20
     Experience: 0
     Level: 1

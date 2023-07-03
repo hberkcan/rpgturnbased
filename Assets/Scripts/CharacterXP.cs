@@ -5,7 +5,6 @@ using System;
 
 public class CharacterXP : MonoBehaviour
 {
-    [SerializeField] private CharacterData characterData;
     private LevelSystem levelSystem;
 
     public event Action OnLevelUp;

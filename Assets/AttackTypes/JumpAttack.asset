@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fa47bf1d0c3624cb6745f4e8c62ca2, type: 3}
   m_Name: JumpAttack
   m_EditorClassIdentifier: 
-  attackDuration: 1.5
+  attackDuration: 1
   attackAnimationClip: {fileID: 7400000, guid: 1005dfb1994dd4d4c9407b61173a0890, type: 2}

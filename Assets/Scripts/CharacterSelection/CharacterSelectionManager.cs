@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 public class CharacterSelectionManager : MonoBehaviour, ISaveable
 {
-    [SerializeField] private CharacterData[] characterDatas;
+    [SerializeField] private CharacterDataSO[] characterDatas;
     [SerializeField] private CharacterSelect characterUIPrefab;
 
-    private List<CharacterData> selectedCharacters;
-    public List<CharacterData> SelectedCharacters => selectedCharacters;
+    private List<CharacterDataSO> selectedCharacters;
+    public List<CharacterDataSO> SelectedCharacters => selectedCharacters;
 
     private List<int> selectedIndexes;
     public List<int> SelectedIndexes => selectedIndexes;
@@ -25,7 +25,7 @@ public class CharacterSelectionManager : MonoBehaviour, ISaveable
 
     private void Awake()
     {
-        selectedCharacters = new List<CharacterData>(MaxCount);
+        selectedCharacters = new List<CharacterDataSO>(MaxCount);
         selectedIndexes = new List<int>(MaxCount);
     }
 
@@ -40,7 +40,7 @@ public class CharacterSelectionManager : MonoBehaviour, ISaveable
         {
             var characterSelect = Instantiate(characterUIPrefab, transform);
             characterSelect.Init(this, i, selectedIndexes);
-            Instantiate(characterDatas[i].characterIcon, characterSelect.transform);
+            Instantiate(characterDatas[i].CharacterIcon, characterSelect.transform);
         }
     }
 

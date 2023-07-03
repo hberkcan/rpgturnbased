@@ -10,10 +10,9 @@ public class PlayerTurnState : BattleState
 
     public override IEnumerator Execute()
     {
-        CharacterAttack attacker = battleManager.ClickedHero.GetComponentInChildren<CharacterAttack>();
-        CharacterHealth target = battleManager.EnemyGO.GetComponent<CharacterHealth>();
+        CharacterHealth target = battleManager.EnemyCharacter.CharacterHealth;
 
-        yield return attacker.AttackBehaviour(target);
+        yield return battleManager.ClickedCharacter.CharacterAttack.AttackBehaviour(target);
         Debug.Log("Player Attacked");
 
         if (target.IsDead)

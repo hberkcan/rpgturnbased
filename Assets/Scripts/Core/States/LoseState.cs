@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MyMessagingSystem;
 
 public class LoseState : BattleState
 {
@@ -10,6 +11,8 @@ public class LoseState : BattleState
 
     public override IEnumerator Execute()
     {
-        yield break;
+        yield return new WaitForSeconds(1f);
+        MessagingSystem.Instance.Dispatch(new BattleLostEvent());
+        Debug.Log("LOST");
     }
 }

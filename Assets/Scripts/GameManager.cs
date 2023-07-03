@@ -6,7 +6,8 @@ using UnityEngine;
 [DefaultExecutionOrder(-10)]
 public class GameManager : MonoBehaviour, ISaveable
 {
-    [SerializeField] CharacterData[] characterDatas;
+    [SerializeField] CharacterDataSO[] characterDataSOs;
+    public static List<Character> CharacterDatas { get; private set; }
 
     private void Awake()
     {
@@ -15,33 +16,22 @@ public class GameManager : MonoBehaviour, ISaveable
 
     private void Init()
     {
-        for (int i = 0; i < characterDatas.Length; i++)
+        CharacterDatas = new List<Character>(characterDataSOs.Length);
+
+        for (int i = 0; i < characterDataSOs.Length; i++)
         {
-            Character character = new Character(characterDatas[i].character.Name, characterDatas[i].character.Stats, characterDatas[i].character.Experience, characterDatas[i].character.Level);
-            characterDatas[i].runtimeCharacter = character;
+            Character character = new Character(characterDataSOs[i].BaseData.Name, characterDataSOs[i].BaseData.Stats, characterDataSOs[i].BaseData.Experience, characterDataSOs[i].BaseData.Level);
+            CharacterDatas.Add(character);
         }
     }
 
     public JToken CaptureState()
     {
-        List<Character> characters = new List<Character>(characterDatas.Length);
-
-        for (int i = 0; i < characterDatas.Length; i++)
-        {
-            characters.Add(characterDatas[i].runtimeCharacter);
-        }
-
-        return JToken.FromObject(characters);
+        return JToken.FromObject(CharacterDatas);
     }
 
     public void RestoreFromState(JToken state)
     {
-        List<Character> characters;
-        characters = state.ToObject<List<Character>>();
-        
-        for(int i = 0; i < characters.Count; i++)
-        {
-            characterDatas[i].runtimeCharacter = characters[i];
-        }
+        CharacterDatas = state.ToObject<List<Character>>();
     }
 }

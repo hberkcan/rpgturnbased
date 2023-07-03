@@ -6,7 +6,15 @@ using System;
 public class CharacterBrain : MonoBehaviour, IClickable
 {
     private Character character;
+    public CharacterAttack CharacterAttack { get; private set; }
+    public CharacterHealth CharacterHealth { get; private set; }
     public Action<CharacterBrain> Clicked;
+
+    private void Awake()
+    {
+        CharacterAttack = GetComponent<CharacterAttack>();
+        CharacterHealth = GetComponent<CharacterHealth>();
+    }
 
     public void OnClick()
     {

@@ -10,11 +10,11 @@ public class BattleManager : MonoBehaviour, IMessagingSubscriber<StartBattleEven
     private BattleStateType currentState;
     private Dictionary<BattleStateType, BattleState> battleStates;
 
-    private List<GameObject> playerCharacters = new List<GameObject>(3);
-    public GameObject ClickedHero { get; private set; }
+    private List<CharacterBrain> playerCharacters = new List<CharacterBrain>(3);
+    public CharacterBrain ClickedCharacter { get; private set; }
 
-    [SerializeField] private GameObject enemyPrefab;
-    public GameObject EnemyGO { get; private set; }
+    [SerializeField] private CharacterBrain enemyPrefab;
+    public CharacterBrain EnemyCharacter { get; private set; }
 
     [SerializeField] private Vector3[] spawnPositions;
 
@@ -49,17 +49,17 @@ public class BattleManager : MonoBehaviour, IMessagingSubscriber<StartBattleEven
         SetupBattle(message.selectedCharacters);
     }
 
-    private void SetupBattle(List<CharacterData> selectedCharacters)
+    private void SetupBattle(List<CharacterDataSO> selectedCharacters)
     {
         for(int i = 0; i < selectedCharacters.Count; i++)
         {
-            var character = Instantiate(selectedCharacters[i].characterPrefab, spawnPositions[i], Quaternion.identity);
+            var character = Instantiate(selectedCharacters[i].CharacterPrefab, spawnPositions[i], Quaternion.identity);
             character.Clicked = HeroClicked;
-            playerCharacters.Add(character.gameObject);
+            playerCharacters.Add(character);
         }
 
-        EnemyGO = Instantiate(enemyPrefab, Vector2.right * 20f + Vector2.down * 2.5f, Quaternion.identity);
-        EnemyGO.transform.Rotate(0f, 180f, 0f);
+        EnemyCharacter = Instantiate(enemyPrefab, Vector2.right * 20f + Vector2.down * 2.5f, Quaternion.identity);
+        EnemyCharacter.transform.Rotate(0f, 180f, 0f);
 
         SetState(BattleStateType.Start);
     }
@@ -75,11 +75,11 @@ public class BattleManager : MonoBehaviour, IMessagingSubscriber<StartBattleEven
         if (currentState != BattleStateType.Ready)
             return;
 
-        ClickedHero = clickedCharacter.gameObject;
+        ClickedCharacter = clickedCharacter;
         SetState(BattleStateType.PlayerTurn);
     }
 
-    public GameObject GetRandomPlayerCharacter()
+    public CharacterBrain GetRandomPlayerCharacter()
     {
         var random = UnityEngine.Random.Range(0, 3);
         return playerCharacters[random];

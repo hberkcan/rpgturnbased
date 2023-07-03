@@ -15,18 +15,18 @@ public class CharacterAttack : MonoBehaviour
     private void Awake()
     {
         characterStat = GetComponent<CharacterStat>();
+
         animator = GetComponentInChildren<Animator>();
         animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
         animator.runtimeAnimatorController = animatorOverrideController;
-
-        animatorOverrideController["Rogue_attack_01"] = attackSkill.attackAnimationClip;
+        animatorOverrideController["Rogue_attack_01"] = attackSkill.GetAnimationClip();
         animator.Rebind();
     }
 
     public Coroutine AttackBehaviour(CharacterHealth target)
     {
         this.target = target;
-        return StartCoroutine(attackSkill.AttackBehaviour(this, target));
+        return StartCoroutine(attackSkill.AttackBehaviour(this, animator, target));
     }
 
     public void Hit()

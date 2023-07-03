@@ -4,8 +4,8 @@ namespace MyMessagingSystem
 {
     public struct StartBattleEvent
     {
-        public List<CharacterData> selectedCharacters;
-        public StartBattleEvent(List<CharacterData> selectedCharacters)
+        public List<CharacterDataSO> selectedCharacters;
+        public StartBattleEvent(List<CharacterDataSO> selectedCharacters)
         {
             this.selectedCharacters = selectedCharacters;
         }
