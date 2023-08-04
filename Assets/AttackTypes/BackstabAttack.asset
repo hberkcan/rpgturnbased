@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f371866b3bab1ae4c9b317fdeb010226, type: 3}
   m_Name: BackstabAttack
   m_EditorClassIdentifier: 
+  targetType: 0
+  eventMarker: 0.25
   attackDuration: 1
   attackAnimationClip: {fileID: 7400000, guid: 8c1e88648e47cbf4b92f6cb1b7b7c8fd, type: 2}

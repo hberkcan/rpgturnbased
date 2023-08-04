@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 699bc152484d51a4fa74aa9baaaaeaf9, type: 3}
   m_Name: Basic Attack
   m_EditorClassIdentifier: 
+  targetType: 0
+  eventMarker: 0.15
   attackDuration: 1
   attackAnimationClip: {fileID: 7400000, guid: 64a73d86c86da4e47acf1b4bbe74fb16, type: 2}

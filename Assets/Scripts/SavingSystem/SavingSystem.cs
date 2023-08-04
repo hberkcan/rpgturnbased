@@ -19,13 +19,13 @@ public class SavingSystem : MonoBehaviour
     {
         JObject state = LoadJsonFromFile(saveFile);
         IDictionary<string, JToken> stateDict = state;
-        int buildIndex = SceneManager.GetActiveScene().buildIndex;
+        int buildIndex = 1;
         if (stateDict.ContainsKey("lastSceneBuildIndex"))
         {
             buildIndex = (int)stateDict["lastSceneBuildIndex"];
         }
         yield return SceneManager.LoadSceneAsync(buildIndex);
-        RestoreFromToken(state);
+        //RestoreFromToken(state);
     }
 
     /// <summary>
