@@ -8,9 +8,8 @@ public class UnitSelect : MonoBehaviour
 {
     public Unit Unit { get; private set; }
     private bool isSelected;
-    
-    public static event Action<UnitSelect> OnAnyUnitSelected;
-    public static event Action<UnitSelect> OnAnyUnitDeselected;
+    public bool IsSelected => isSelected;
+    public static event Action<UnitSelect> OnAnyUnitSelectClicked;
     public UnityEvent SelectEvent;
     public UnityEvent DeselectEvent;
 
@@ -21,16 +20,7 @@ public class UnitSelect : MonoBehaviour
 
     public void OnClick()
     {
-        isSelected = !isSelected;
-
-        if (isSelected)
-        {
-            OnAnyUnitSelected?.Invoke(this);
-        }
-        else
-        {
-            OnAnyUnitDeselected?.Invoke(this);
-        }
+        OnAnyUnitSelectClicked?.Invoke(this);
     }
 
     public void Select()

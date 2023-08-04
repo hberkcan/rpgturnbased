@@ -82,12 +82,14 @@ public class UnitController : MonoBehaviour
         UnitDiedEvent?.Invoke(this);
     }
 
-    public void AddXP(int amount)
+    public void AddXP()
     {
         //if (levelSystem.AddXP(amount))
         //{
         //    OnLevelUp?.Invoke(levelSystem.CurrentLevel);
         //}
+
+        data.Level++;
     }
 
     public void FlipX()

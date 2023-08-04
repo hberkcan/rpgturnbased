@@ -158,6 +158,8 @@ public class BattleManager : MonoBehaviour
     void SetBattleVictory()
     {
         SetState(BattleStateType.Won);
+        foreach (UnitController unit in alivePlayerUnits)
+            unit.AddXP();
     }
 
     void SetBattleDefeat()

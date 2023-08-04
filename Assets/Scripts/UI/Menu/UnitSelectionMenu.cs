@@ -28,36 +28,36 @@ public class UnitSelectionMenu : Menu<UnitSelectionMenu>
 
     private void OnEnable()
     {
-        UnitSelect.OnAnyUnitSelected += UnitSelect_OnAnyUnitSelected;
-        UnitSelect.OnAnyUnitDeselected += UnitSelect_OnAnyUnitDeselected;
+        UnitSelect.OnAnyUnitSelectClicked += UnitSelect_OnAnyUnitSelectClicked;
     }
 
     private void OnDisable()
     {
-        UnitSelect.OnAnyUnitSelected -= UnitSelect_OnAnyUnitSelected;
-        UnitSelect.OnAnyUnitDeselected -= UnitSelect_OnAnyUnitDeselected;
+        UnitSelect.OnAnyUnitSelectClicked -= UnitSelect_OnAnyUnitSelectClicked;
     }
 
-    private void UnitSelect_OnAnyUnitSelected(UnitSelect unitSelect)
+    private void UnitSelect_OnAnyUnitSelectClicked(UnitSelect unitSelect)
     {
-        if (selectedUnitCount == MaxCount)
+        if (selectedUnitCount == MaxCount && !unitSelect.IsSelected)
             return;
 
-        unitSelect.Select();
-        MessagingSystem.Instance.Dispatch(new UnitSelectedEvent(unitSelect.Unit));
-        selectedUnitCount++;
+        if (!unitSelect.IsSelected)
+        {
+            unitSelect.Select();
+            MessagingSystem.Instance.Dispatch(new UnitSelectedEvent(unitSelect.Unit));
+            selectedUnitCount++;
 
-        if (selectedUnitCount == MaxCount)
-            startButton.interactable = true;
-    }
+            if (selectedUnitCount == MaxCount)
+                startButton.interactable = true;
+        }
+        else
+        {
+            unitSelect.Deselect();
+            MessagingSystem.Instance.Dispatch(new UnitDeselectedEvent(unitSelect.Unit));
+            selectedUnitCount--;
 
-    private void UnitSelect_OnAnyUnitDeselected(UnitSelect unitSelect)
-    {
-        unitSelect.Deselect();
-        MessagingSystem.Instance.Dispatch(new UnitDeselectedEvent(unitSelect.Unit));
-        selectedUnitCount--;
-
-        startButton.interactable = false;
+            startButton.interactable = false;
+        }
     }
 
     private void Setup()
