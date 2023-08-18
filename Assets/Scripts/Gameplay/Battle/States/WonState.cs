@@ -13,6 +13,5 @@ public class WonState : BattleState
     {
         yield return new WaitForSeconds(1f);
         battleManager.BattleHUD.BattleWon();
-        MessagingSystem.Instance.Dispatch(new BattleWonEvent());
     }
 }

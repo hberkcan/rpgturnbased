@@ -9,17 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7657f8b8c102b44fa4f07e7e283b6c3, type: 3}
+  m_Script: {fileID: 11500000, guid: eeaf1f808ebfce8468bccbcdbb136d63, type: 3}
   m_Name: Rogue2_Data
   m_EditorClassIdentifier: 
   UnitPrefab: {fileID: 6123550037039396467, guid: 724315939358da94382316c4df9be405, type: 3}
   UnitIcon: {fileID: 3926609367448832269, guid: 7bd2d7b426bd9be4b8c9fc5bf950bf11, type: 3}
-  BaseData:
+  Data:
     Name: Rogue2
-    MaxHealth:
-      baseValue: 100
-    CurrentHealth: 0
-    AttackPower:
-      baseValue: 35
+    MaxHealth: 100
+    CurrentHealth: 100
+    AttackPower: 35
     Experience: 0
-    Level: 1

@@ -15,9 +15,8 @@ GameObject:
   - component: {fileID: -1530192129326808658}
   - component: {fileID: -5518875957987257096}
   - component: {fileID: -6460320179197397846}
-  - component: {fileID: 8090855443166811216}
-  - component: {fileID: -1272907541142347371}
   - component: {fileID: 6335201747383690889}
+  - component: {fileID: 5129186045674692574}
   - component: {fileID: -6938150820640483976}
   - component: {fileID: 2697595552279420438}
   m_Layer: 0
@@ -82,6 +81,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e45e9f85846e54d8164fad73c179a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data:
+    currentData:
+      Name: 
+      MaxHealth: 0
+      CurrentHealth: 0
+      AttackPower: 0
+      Experience: 0
+  OnLevelUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7092085845876430778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,18 +134,6 @@ MonoBehaviour:
   OnTakeDamage:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2164821096846296053}
-        m_TargetAssemblyTypeName: HealthDisplay, Assembly-CSharp
-        m_MethodName: UpdateDisplay
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: -6460320179197397846}
         m_TargetAssemblyTypeName: UnitAnimationBehaviour, Assembly-CSharp
         m_MethodName: TakeDamage
@@ -200,6 +197,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7069418158847852998}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &-5518875957987257096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,33 +233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133b7e175d0aaa34393cfbea7fedf873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8090855443166811216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1050988311129615951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f8ca9d14179a5b4792e07758729bcde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-1272907541142347371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1050988311129615951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99494264040cd9441a1c58dcdf4ad45f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnLevelUp:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &6335201747383690889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +248,19 @@ MonoBehaviour:
   damageColorTint: {r: 1, g: 1, b: 1, a: 1}
   healColorTint: {r: 0, g: 1, b: 0, a: 1}
   damageDisplayTransform: {fileID: 6590454072940863288}
+--- !u!114 &5129186045674692574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050988311129615951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 907b41f69f83211429646b36471f8a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rend: {fileID: 5054126284797679284}
 --- !u!114 &-6938150820640483976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,17 +391,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13c2fe80db43db54893c2eb092bdaaa6, type: 3}
---- !u!114 &2164821096846296053 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8583535718745821746, guid: 13c2fe80db43db54893c2eb092bdaaa6, type: 3}
+--- !u!212 &5054126284797679284 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3402460724938131315, guid: 13c2fe80db43db54893c2eb092bdaaa6, type: 3}
   m_PrefabInstance: {fileID: 7571717638786863559}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5054126284797679285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 907b41f69f83211429646b36471f8a57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5054126284797679285 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3402460724938131314, guid: 13c2fe80db43db54893c2eb092bdaaa6, type: 3}

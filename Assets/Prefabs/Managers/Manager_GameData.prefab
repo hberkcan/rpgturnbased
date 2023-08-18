@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6251619458877892901}
   - component: {fileID: 6251619458877892900}
   - component: {fileID: 2546794446721587854}
+  - component: {fileID: 4078160704916578017}
   m_Layer: 0
   m_Name: Manager_GameData
   m_TagString: Untagged
@@ -48,12 +49,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitDataSOs:
-  - {fileID: 11400000, guid: 00ce9d479b48ba549adee0d3b6f8a818, type: 2}
-  - {fileID: 11400000, guid: 86ae3829e9528ba45a81592e6222d153, type: 2}
-  - {fileID: 11400000, guid: 3ec8a65cc9423804a8cc124a60a09cf3, type: 2}
-  - {fileID: 11400000, guid: 5d825766ed0a6b248854006abfb19dd9, type: 2}
-  - {fileID: 11400000, guid: bd82d0cce5e481d468d75527cfffd47d, type: 2}
-  - {fileID: 11400000, guid: cf3c70633c4adb2479e52a3d9938325f, type: 2}
+  - {fileID: 11400000, guid: 1f034657d5f6ff34594d5fde24c4b3ca, type: 2}
+  - {fileID: 11400000, guid: 81eb3aa4abbd0a64d8542ad3dd2ada61, type: 2}
+  - {fileID: 11400000, guid: 984147c7a6b909942a57b899fa7d8569, type: 2}
+  - {fileID: 11400000, guid: c012bb6f95e967c4fa177e982ff6a738, type: 2}
+  - {fileID: 11400000, guid: 35d2ab94db5f4f44c99624e63628819f, type: 2}
+  - {fileID: 11400000, guid: e283f13899a35f640b03e79920c571f2, type: 2}
+  units: []
 --- !u!114 &6251619458877892901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,7 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstLevelBuildIndex: 1
-  menuLevelBuildIndex: 0
+  menuLevelBuildIndex: 1
 --- !u!114 &2546794446721587854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,3 +94,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34922065bb3daf641a3963d429144019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4078160704916578017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6251619458877892896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f02f4c899c66064ea321c5a20387648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueIdentifier: GameDataManager

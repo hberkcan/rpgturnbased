@@ -16,7 +16,7 @@ public class UnitDamageDisplayBehaviour : MonoBehaviour
     public Transform damageDisplayTransform;
 
     //UnityEvent
-    public void DisplayDamage(float damageTaken)
+    public void DisplayDamage(int damageTaken)
     {
         // tint colors for damage or healing
         Color colorTint = (damageTaken < 0) ? damageColorTint : healColorTint;

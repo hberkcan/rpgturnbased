@@ -5,10 +5,40 @@ using UnityEngine;
 [System.Serializable]
 public class Stat
 {
-    [SerializeField] private float baseValue;
+    [SerializeField] private int baseValue;
+    private int value;
+    private int modifiers;
+    private bool isDirty = true;
 
-    public float GetValue() 
+    public int Value
     {
-        return baseValue;
+        get 
+        {
+            if (isDirty)
+            {
+                value = CalculateFinalValue();
+                isDirty = false;
+            }
+
+            return value;
+        }
+    }
+
+    public Stat(int baseValue)
+    {
+        this.baseValue = baseValue;
+    }
+
+    public void IncrementValue(int amount)
+    {
+        isDirty = true;
+        modifiers += amount;
+    }
+
+    private int CalculateFinalValue()
+    {
+        int finalValue = baseValue;
+        finalValue += modifiers;
+        return finalValue;
     }
 }

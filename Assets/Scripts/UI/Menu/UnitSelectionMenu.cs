@@ -6,7 +6,6 @@ using MyMessagingSystem;
 
 public class UnitSelectionMenu : Menu<UnitSelectionMenu>
 {
-    [SerializeField] private UnitDataSO[] unitDatas;
     [SerializeField] private UnitSelect unitUIPrefab;
     [SerializeField] private Transform unitSelectParent;
 
@@ -62,14 +61,15 @@ public class UnitSelectionMenu : Menu<UnitSelectionMenu>
 
     private void Setup()
     {
-        for (int i = 0; i < unitDatas.Length; i++)
+        Unit[] units = GameDataManager.Instance.GetUnitDatas();
+
+        for (int i = 0; i < units.Length; i++)
         {
             var unitSelect = Instantiate(unitUIPrefab, unitSelectParent);
-            Instantiate(unitDatas[i].UnitIcon, unitSelect.transform);
+            Instantiate(units[i].UnitIcon, unitSelect.transform);
 
-            var data = GameDataManager.GetUnitDatas()[i];
-            unitSelect.Init(data);
-            if (GameDataManager.GetSelectedUnits().Contains(data))
+            unitSelect.Init(units[i]);
+            if (GameDataManager.Instance.GetSelectedUnits().Contains(units[i].Name))
             {
                 unitSelect.Select();
                 selectedUnitCount++;

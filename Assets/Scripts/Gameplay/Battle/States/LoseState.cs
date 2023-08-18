@@ -13,6 +13,5 @@ public class LoseState : BattleState
     {
         yield return new WaitForSeconds(1f);
         battleManager.BattleHUD.BattleLost();
-        MessagingSystem.Instance.Dispatch(new BattleLostEvent());
     }
 }

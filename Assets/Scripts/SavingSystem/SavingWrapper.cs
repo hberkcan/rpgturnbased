@@ -16,6 +16,11 @@ public class SavingWrapper : MonoBehaviour
         savingSystem = GetComponent<SavingSystem>();
     }
 
+    //private void Start()
+    //{
+    //    ContinueGame();
+    //}
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
@@ -30,18 +35,19 @@ public class SavingWrapper : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        //Save();
+        Save();
     }
 
     private void SceneManager_sceneLoaded(Scene scn, LoadSceneMode mode)
     {
-        if (scn.buildIndex == 0)
+        if (scn.buildIndex == 0) 
         {
+            Load();
             LoadGame(currentSaveKey);
             return;
         }
 
-        Load();
+        //Load();
     }
 
     private void SceneManager_sceneUnloaded(Scene scn)

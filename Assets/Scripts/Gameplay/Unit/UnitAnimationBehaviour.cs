@@ -25,4 +25,9 @@ public class UnitAnimationBehaviour : MonoBehaviour
     {
         animator.SetTrigger("Die");
     }
+
+    public void DieInstant()
+    {
+        animator.Play("Rogue_death_01", -1, 1);
+    }
 }

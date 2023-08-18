@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class HealthDisplay : MonoBehaviour
 {
+    [SerializeField] private Renderer rend;
     private Material material;
-    private UnitHealth unitHealth;
 
     private void Awake()
     {
-        material = GetComponent<Renderer>().material;
-        unitHealth = GetComponentInParent<UnitHealth>();
+        material = rend.material;
     }
 
-    public void UpdateDisplay()
+    public void UpdateDisplay(float healthRatio)
     {
-        material.SetFloat("_Health", unitHealth.GetPercentage());
+        material.SetFloat("_Health", healthRatio);
+    }
+
+    public void SetActive(bool value)
+    {
+        rend.gameObject.SetActive(value);
     }
 }

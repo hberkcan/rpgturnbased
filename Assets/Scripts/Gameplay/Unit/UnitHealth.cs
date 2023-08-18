@@ -5,18 +5,19 @@ using UnityEngine.Events;
 
 public class UnitHealth : MonoBehaviour
 {
-    private float maxHealth;
-    private float currentHealth;
-    public UnityEvent<float> OnTakeDamage;
+    private int maxHealth;
+    private int currentHealth;
+    public int CurrentHealth => currentHealth;
+    public UnityEvent<int> OnTakeDamage;
     public UnityEvent OnDie;
 
-    public void SetHealth(float maxHealth, float currentHealth)
+    public void SetHealth(int maxHealth, int currentHealth)
     {
         this.maxHealth = maxHealth;
         this.currentHealth = currentHealth;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
@@ -31,6 +32,6 @@ public class UnitHealth : MonoBehaviour
 
     public float GetPercentage()
     {
-        return currentHealth / maxHealth;
+        return (float)currentHealth / maxHealth;
     }
 }

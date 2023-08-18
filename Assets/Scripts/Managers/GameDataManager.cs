@@ -4,27 +4,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using MyMessagingSystem;
 
-public class GameDataManager : MonoBehaviour, ISaveable, IMessagingSubscriber<UnitSelectedEvent>, IMessagingSubscriber<UnitDeselectedEvent>, IMessagingSubscriber<BattleWonEvent>, IMessagingSubscriber<BattleLostEvent>
+[RequireComponent(typeof(SavingWrapper))]
+public class GameDataManager : MonoBehaviour, ISaveable, IMessagingSubscriber<UnitSelectedEvent>, IMessagingSubscriber<UnitDeselectedEvent>, IMessagingSubscriber<BattleStartEvent>, IMessagingSubscriber<BattleWonEvent>, IMessagingSubscriber<BattleLostEvent>
 {
-    [SerializeField] private UnitDataSO[] unitDataSOs;
-    private static Unit[] unitDatas;
-    private static Dictionary<string, UnitDataSO> unitBaseDictionary;
-    private static Dictionary<string, Unit> unitDataDictionary;
-    private static List<Unit> selectedUnits;
-    private bool isLoaded;
+    public static GameDataManager Instance;
+    [SerializeField] private UnitBaseData[] unitDataSOs;
+    [SerializeField] private Unit[] units;
+    private Dictionary<string, Unit> unitsDictionary;
+    [SerializeField]private List<string> selectedUnits;
+    public static bool isBattleActive;
 
     private void Awake()
     {
-        unitDatas = new Unit[unitDataSOs.Length];
-        unitBaseDictionary = new Dictionary<string, UnitDataSO>(unitDataSOs.Length);
-        unitDataDictionary = new Dictionary<string, Unit>(unitDataSOs.Length);
-        selectedUnits = new List<Unit>();
+        if (Instance == null)
+            Instance = this;
+
+        units = new Unit[unitDataSOs.Length];
+        unitsDictionary = new Dictionary<string, Unit>(unitDataSOs.Length);
+        selectedUnits = new List<string>();
+
+        Init();
     }
 
     private void OnEnable()
     {
         MessagingSystem.Instance.Subscribe<UnitSelectedEvent>(this);
         MessagingSystem.Instance.Subscribe<UnitDeselectedEvent>(this);
+        MessagingSystem.Instance.Subscribe<BattleStartEvent>(this);
         MessagingSystem.Instance.Subscribe<BattleWonEvent>(this);
         MessagingSystem.Instance.Subscribe<BattleLostEvent>(this);
     }
@@ -33,38 +39,39 @@ public class GameDataManager : MonoBehaviour, ISaveable, IMessagingSubscriber<Un
     {
         MessagingSystem.Instance.Unsubscribe<UnitSelectedEvent>(this);
         MessagingSystem.Instance.Unsubscribe<UnitDeselectedEvent>(this);
+        MessagingSystem.Instance.Unsubscribe<BattleStartEvent>(this);
         MessagingSystem.Instance.Unsubscribe<BattleWonEvent>(this);
         MessagingSystem.Instance.Unsubscribe<BattleLostEvent>(this);
     }
 
-    private void Start()
-    {
-        Init();
-    }
-
     private void Init()
     {
-        if (!isLoaded)
+        for (int i = 0; i < unitDataSOs.Length; i++)
         {
-            for (int i = 0; i < unitDataSOs.Length; i++)
-            {
-                Unit character = new(unitDataSOs[i].BaseData.Name, unitDataSOs[i].BaseData.MaxHealth, unitDataSOs[i].BaseData.MaxHealth.GetValue(), unitDataSOs[i].BaseData.AttackPower, unitDataSOs[i].BaseData.Experience, unitDataSOs[i].BaseData.Level);
-                unitDatas[i] = character;
-            }
+            Unit unit = new Unit(unitDataSOs[i]);
+            units[i] = unit;
         }
 
         for (int i = 0; i < unitDataSOs.Length; i++)
         {
-            unitBaseDictionary.Add(unitDataSOs[i].BaseData.Name, unitDataSOs[i]);
-            unitDataDictionary.Add(unitDataSOs[i].BaseData.Name, unitDatas[i]);
+            unitsDictionary.Add(units[i].Name, units[i]);
         }
     }
 
     public JToken CaptureState()
     {
+        List<UnitData> datas = new List<UnitData>();
+
+        for(int i = 0; i < units.Length; i++)
+        {
+            datas.Add(units[i].GetData());
+        }
+
         var gameData = new GameData
         {
-            UnitDatas = unitDatas
+            UnitDatas = datas.ToArray(),
+            SelectedUnits = selectedUnits,
+            IsBattleActive = isBattleActive
         };
 
         return JToken.FromObject(gameData);
@@ -72,48 +79,55 @@ public class GameDataManager : MonoBehaviour, ISaveable, IMessagingSubscriber<Un
 
     public void RestoreFromState(JToken state)
     {
-        isLoaded = true;
         var gameData = state.ToObject<GameData>();
-        unitDatas = gameData.UnitDatas;
+
+        for (int i = 0; i < gameData.UnitDatas.Length; i++)
+        {
+            UnitData data = gameData.UnitDatas[i];
+            units[i].SetData(new UnitData(data.Name, data.MaxHealth, data.CurrentHealth, data.AttackPower, data.Experience));
+        }
+
+        selectedUnits = gameData.SelectedUnits;
+        isBattleActive = gameData.IsBattleActive;
     }
 
-    public static UnitController GetUnitPrefabByName(string name)
+    public Unit GetUnitByName(string name)
     {
-        return unitBaseDictionary[name].UnitPrefab;
+        return unitsDictionary[name];
     }
 
-    public static Unit GetDataByName(string name)
+    public Unit[] GetUnitDatas()
     {
-        return unitDataDictionary[name];
+        return units;
     }
 
-    public static Unit[] GetUnitDatas()
-    {
-        return unitDatas;
-    }
-
-    public static List<Unit> GetSelectedUnits()
+    public List<string> GetSelectedUnits()
     {
         return selectedUnits;
     }
 
     public void OnReceiveMessage(UnitSelectedEvent message)
     {
-        selectedUnits.Add(message.unit);
+        selectedUnits.Add(message.unit.Name);
     }
 
     public void OnReceiveMessage(UnitDeselectedEvent message)
     {
-        selectedUnits.Remove(message.unit);
+        selectedUnits.Remove(message.unit.Name);
     }
 
     public void OnReceiveMessage(BattleWonEvent message)
     {
-        //selectedUnits.Clear();
+        isBattleActive = false;
     }
 
     public void OnReceiveMessage(BattleLostEvent message)
     {
-        //selectedUnits.Clear();
+        isBattleActive = false;
+    }
+
+    public void OnReceiveMessage(BattleStartEvent message)
+    {
+        isBattleActive = true;
     }
 }

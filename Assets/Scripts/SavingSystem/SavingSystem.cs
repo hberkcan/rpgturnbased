@@ -20,10 +20,12 @@ public class SavingSystem : MonoBehaviour
         JObject state = LoadJsonFromFile(saveFile);
         IDictionary<string, JToken> stateDict = state;
         int buildIndex = 1;
-        if (stateDict.ContainsKey("lastSceneBuildIndex"))
-        {
-            buildIndex = (int)stateDict["lastSceneBuildIndex"];
-        }
+        //if (stateDict.ContainsKey("lastSceneBuildIndex"))
+        //{
+        //    buildIndex = (int)stateDict["lastSceneBuildIndex"];
+        //}
+        if (GameDataManager.isBattleActive)
+            buildIndex = 2;
         yield return SceneManager.LoadSceneAsync(buildIndex);
         //RestoreFromToken(state);
     }

@@ -46,4 +46,10 @@ public class LevelSystem
 
         return XPForLevel(CurrentLevel + 1) - CurrentExperience;
     }
+
+    public void Reset()
+    {
+        CurrentLevel = 1;
+        CurrentExperience = 0;
+    }
 }
