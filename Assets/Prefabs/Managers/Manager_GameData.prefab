@@ -81,7 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstLevelBuildIndex: 1
   menuLevelBuildIndex: 1
-  saveOn: 0
+  saveOn: 1
 --- !u!114 &2546794446721587854
 MonoBehaviour:
   m_ObjectHideFlags: 0
