@@ -55,7 +55,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c012bb6f95e967c4fa177e982ff6a738, type: 2}
   - {fileID: 11400000, guid: 35d2ab94db5f4f44c99624e63628819f, type: 2}
   - {fileID: 11400000, guid: e283f13899a35f640b03e79920c571f2, type: 2}
-  units: []
 --- !u!114 &6251619458877892901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstLevelBuildIndex: 1
   menuLevelBuildIndex: 1
+  saveOn: 0
 --- !u!114 &2546794446721587854
 MonoBehaviour:
   m_ObjectHideFlags: 0

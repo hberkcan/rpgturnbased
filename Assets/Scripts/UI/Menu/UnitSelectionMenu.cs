@@ -66,10 +66,11 @@ public class UnitSelectionMenu : Menu<UnitSelectionMenu>
         for (int i = 0; i < units.Length; i++)
         {
             var unitSelect = Instantiate(unitUIPrefab, unitSelectParent);
-            Instantiate(units[i].UnitIcon, unitSelect.transform);
+            GameObject icon = units[i].GetUnitIcon(unitSelect.transform);
 
             unitSelect.Init(units[i]);
-            if (GameDataManager.Instance.GetSelectedUnits().Contains(units[i].Name))
+
+            if (GameDataManager.Instance.GetSelectedUnits().Contains(units[i]))
             {
                 unitSelect.Select();
                 selectedUnitCount++;

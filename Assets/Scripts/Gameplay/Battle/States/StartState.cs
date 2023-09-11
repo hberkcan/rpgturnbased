@@ -13,6 +13,10 @@ public class StartState : BattleState
         float wait = 2f;
         battleManager.BattleHUD.StartCountdown(wait);
         yield return new WaitForSeconds(wait);
-        battleManager.SetState(BattleStateType.Ready);
+
+        if (battleManager.IsPlayerTurn)
+            battleManager.SetState(BattleStateType.PlayerTurn);
+        else
+            battleManager.SetState(BattleStateType.EnemyTurn);
     }
 }

@@ -16,7 +16,9 @@ MonoBehaviour:
   UnitIcon: {fileID: 220862970461221727, guid: 82ac209689c58b141b81d9fe42e67158, type: 3}
   Data:
     Name: Rogue5
+    UnitType: Rogue5
     MaxHealth: 100
     CurrentHealth: 100
-    AttackPower: 35
+    AttackPower: 20
     Experience: 0
+    IsUnlocked: 0

@@ -6,57 +6,68 @@ using System;
 [Serializable]
 public class Unit
 {
-    private UnitBaseData baseData;
-    [SerializeField]private UnitData currentData;
-    private LevelSystem levelSystem;
-
-    public string Name => currentData.Name;
+    public string Name { get; private set; }
+    public string UnitType { get; private set; }
     public Stat MaxHealth { get; private set; }
-    public int CurrentHealth 
-    { 
-        get { return currentData.CurrentHealth; } 
-        set 
-        { 
-            currentData.CurrentHealth = value;
-            if (Name == "Rogue6")
-                Debug.Log(currentData.CurrentHealth);
-        } 
-    }
+    public int CurrentHealth { get; set; }
     public Stat AttackPower { get; private set; }
+    private LevelSystem levelSystem;
     public int Experience => levelSystem.CurrentExperience;
+    public double XpPercentage => levelSystem.XPPercentage;
     public int CurrentLevel => levelSystem.CurrentLevel;
-    public UnitController UnitPrefab => baseData.UnitPrefab;
-    public GameObject UnitIcon => baseData.UnitIcon;
+    public bool IsAlive => CurrentHealth > 0;
+    public bool IsUnlocked { get; set; }
 
-    public Unit(UnitBaseData baseData)
+    public Unit(UnitData data)
     {
-
-        this.baseData = baseData;
-        currentData = new UnitData(baseData.Data.Name, baseData.Data.MaxHealth, baseData.Data.MaxHealth, baseData.Data.AttackPower, baseData.Data.Experience);
-        MaxHealth = new Stat(currentData.MaxHealth);
-        AttackPower = new Stat(currentData.AttackPower);
+        Name = data.Name;
+        UnitType = data.UnitType;
+        MaxHealth = new Stat(data.MaxHealth);
+        CurrentHealth = data.CurrentHealth;
+        AttackPower = new Stat(data.AttackPower);
         levelSystem = new LevelSystem();
-        levelSystem.AddXP(currentData.Experience);
+        levelSystem.AddXP(data.Experience);
+        IsUnlocked = data.IsUnlocked;
     }
 
-    public void SetData(UnitData savedData)
+    public UnitController CreateUnitObject(Vector3 position, Quaternion rotation)
     {
-        currentData = new UnitData(savedData.Name, savedData.MaxHealth, savedData.CurrentHealth, savedData.AttackPower, savedData.Experience);
-        MaxHealth = new Stat(currentData.MaxHealth);
-        AttackPower = new Stat(currentData.AttackPower);
+        string path = $"Units/{UnitType}";
+        UnitController unitController = UnityEngine.Object.Instantiate(Resources.Load<UnitController>(path), position, rotation);
+        unitController.Init(this);
+        return unitController;
+    }
+
+    public GameObject GetUnitIcon(Transform parent)
+    {
+        string path = $"Units/Icons/{UnitType}_Icon";
+        GameObject icon = UnityEngine.Object.Instantiate(Resources.Load<GameObject>(path), parent);
+        return icon;
+    }
+
+    public void SetData(UnitData newData)
+    {
+        Name = newData.Name;
+        MaxHealth = new Stat(newData.MaxHealth);
+        CurrentHealth = newData.CurrentHealth;
+        AttackPower = new Stat(newData.AttackPower);
         levelSystem.Reset();
-        levelSystem.AddXP(currentData.Experience);
+        levelSystem.AddXP(newData.Experience);
+        IsUnlocked = newData.IsUnlocked;
     }
 
     public UnitData GetData()
     {
-        return new UnitData(currentData.Name, MaxHealth.Value, currentData.CurrentHealth, AttackPower.Value, levelSystem.CurrentExperience);
+        return new UnitData(Name, UnitType, MaxHealth.Value, CurrentHealth, AttackPower.Value, levelSystem.CurrentExperience, IsUnlocked);
     }
 
     public bool AddXP(int amount)
     {
-        MaxHealth.IncrementValue(10);
-        AttackPower.IncrementValue(10);
         return levelSystem.AddXP(amount);
+    }
+
+    public void ResetHealth()
+    {
+        CurrentHealth = MaxHealth.Value;
     }
 }

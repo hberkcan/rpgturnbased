@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Events;
+using MyMessagingSystem;
 
-public class UnitController : MonoBehaviour
+public class UnitController : MonoBehaviour, IClick, ILongPress, ILongPressEnd
 {
     [SerializeField] private Unit data;
     private UnitAttack unitAttack;
@@ -26,19 +27,23 @@ public class UnitController : MonoBehaviour
         healthDisplay = GetComponent<HealthDisplay>();
     }
 
-    //UnityEvent
     public void OnClick()
     {
         Clicked?.Invoke(this);
     }
 
-    //UnityEvent
     public void OnLongPress()
     {
-        //show stats
+        Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
+        MessagingSystem.Instance.Dispatch(new StatDisplayEvent(data, pos));
     }
 
-    public bool Init(Unit unit)
+    public void OnLongPressEnd()
+    {
+        MessagingSystem.Instance.Dispatch(new HideStatDisplayEvent());
+    }
+
+    public void Init(Unit unit)
     {
         data = unit;
 
@@ -46,12 +51,10 @@ public class UnitController : MonoBehaviour
         {
             healthDisplay.SetActive(false);
             unitAnimationBehaviour.DieInstant();
-            return false;
         }
 
         unitHealth.SetHealth(data.MaxHealth.Value, data.CurrentHealth);
         healthDisplay.UpdateDisplay(unitHealth.GetPercentage());
-        return true;
     }
 
     public void AssignTargetUnits(List<UnitController> units)
@@ -98,10 +101,14 @@ public class UnitController : MonoBehaviour
 
     public void AddXP()
     {
-        int xp = 1;
+        int xp = 2;
+        int statIncrement = 10;
+
         if (data.AddXP(xp))
         {
             OnLevelUp?.Invoke(data.CurrentLevel);
+            data.MaxHealth.IncrementValue(statIncrement);
+            data.AttackPower.IncrementValue(statIncrement);
         }
     }
 
@@ -110,8 +117,8 @@ public class UnitController : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
-    public void ResetHealth()
+    public UnitData GetData()
     {
-        data.CurrentHealth = data.MaxHealth.Value;
+        return data.GetData();
     }
 }

@@ -24,10 +24,10 @@ public class SavingSystem : MonoBehaviour
         //{
         //    buildIndex = (int)stateDict["lastSceneBuildIndex"];
         //}
-        if (GameDataManager.isBattleActive)
+        if (GameDataManager.Instance.IsBattleActive)
             buildIndex = 2;
         yield return SceneManager.LoadSceneAsync(buildIndex);
-        //RestoreFromToken(state);
+        RestoreFromToken(state);
     }
 
     /// <summary>

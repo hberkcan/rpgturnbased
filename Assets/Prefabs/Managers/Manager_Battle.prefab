@@ -454,6 +454,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7543491419897880569}
   - component: {fileID: 7543491419897880570}
+  - component: {fileID: 6822704784897471060}
+  - component: {fileID: -1426670300652788725}
   m_Layer: 0
   m_Name: Manager_Battle
   m_TagString: Untagged
@@ -490,9 +492,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alivePlayerUnits: []
-  enemyUnits:
-  - {fileID: 11400000, guid: e283f13899a35f640b03e79920c571f2, type: 2}
   aliveEnemyUnits: []
+  unitsOnBattleground: []
+  enemyUnitDatas: []
   enemyCount: 1
   playerSpawnPositions:
   - {x: -20, y: -2.5, z: 0}
@@ -503,6 +505,82 @@ MonoBehaviour:
   - {x: 17.5, y: -10, z: 0}
   - {x: 17.5, y: 5, z: 0}
   battleHUD: {fileID: 7543491419931575752}
+  enemyUnitCreator: {fileID: 6822704784897471060}
+--- !u!114 &6822704784897471060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543491419897880571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c2d074515c48348bcc0272557038a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyUnits:
+  - {fileID: 11400000, guid: e283f13899a35f640b03e79920c571f2, type: 2}
+  healthScaling:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.11111111
+      outSlope: 0.11111111
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 9
+      value: 2
+      inSlope: 0.11111111
+      outSlope: 0.11111111
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  attackScaling:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.11111111
+      outSlope: 0.11111111
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 9
+      value: 2
+      inSlope: 0.11111111
+      outSlope: 0.11111111
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &-1426670300652788725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7543491419897880571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f02f4c899c66064ea321c5a20387648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueIdentifier: BattleManager
 --- !u!1 &7543491419931575753
 GameObject:
   m_ObjectHideFlags: 0

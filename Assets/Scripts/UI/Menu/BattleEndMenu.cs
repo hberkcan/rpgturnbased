@@ -28,6 +28,6 @@ public class BattleEndMenu : Menu<BattleEndMenu>, IMessagingSubscriber<BattleWon
 
     public void OnReceiveMessage(BattleLostEvent message)
     {
-        battleLostBanner.SetActive(false);
+        battleLostBanner.SetActive(true);
     }
 }

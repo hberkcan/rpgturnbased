@@ -10,6 +10,7 @@ public class SavingWrapper : MonoBehaviour
     private const string currentSaveKey = "currentSaveName";
     [SerializeField] int firstLevelBuildIndex = 1;
     [SerializeField] int menuLevelBuildIndex = 0;
+    [SerializeField] bool saveOn = true;
 
     private void Awake()
     {
@@ -35,7 +36,8 @@ public class SavingWrapper : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Save();
+        if (saveOn)
+            Save();
     }
 
     private void SceneManager_sceneLoaded(Scene scn, LoadSceneMode mode)

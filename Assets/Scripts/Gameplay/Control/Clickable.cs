@@ -17,8 +17,9 @@ public class Clickable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private WaitForSeconds delay;
     private Coroutine timerCoroutine;
 
-    public UnityEvent Clicked;
-    public UnityEvent LongPressed;
+    //public UnityEvent Clicked;
+    //public UnityEvent LongPressed;
+    //public UnityEvent LongPressEnded;
 
     private void Awake()
     {
@@ -38,7 +39,15 @@ public class Clickable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         if (!isLongPressed)
         {
-            Clicked?.Invoke();
+            //Clicked?.Invoke();
+            foreach (IClick i in GetComponents<IClick>())
+                i.OnClick();
+        }
+        else 
+        {
+            //LongPressEnded?.Invoke();
+            foreach (ILongPressEnd i in GetComponents<ILongPressEnd>())
+                i.OnLongPressEnd();
         }
 
         isPointerDown = false;
@@ -55,7 +64,9 @@ public class Clickable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             {
                 isLongPressed = true;
 
-                LongPressed?.Invoke();
+                //LongPressed?.Invoke();
+                foreach (ILongPress i in GetComponents<ILongPress>())
+                    i.OnLongPress();
 
                 yield break;
             }

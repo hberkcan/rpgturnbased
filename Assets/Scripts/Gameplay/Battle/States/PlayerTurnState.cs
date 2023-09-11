@@ -10,9 +10,18 @@ public class PlayerTurnState : BattleState
 
     public override IEnumerator Execute()
     {
+        battleManager.IsPlayerTurn = true;
+
+        while (battleManager.WaitingForInput)
+            yield return null;
+
         yield return battleManager.ClickedUnit.StartAttackSequence();
 
+        battleManager.WaitingForInput = true;
+
         if (battleManager.IsBattleOn)
+        {
             battleManager.SetState(BattleStateType.EnemyTurn);
+        }
     }
 }

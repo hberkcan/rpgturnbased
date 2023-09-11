@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MyMessagingSystem;
+using Newtonsoft.Json.Linq;
 
-public enum BattleStateType { Start, Ready, PlayerTurn, EnemyTurn, Won, Lose}
-public class BattleManager : MonoBehaviour
+public enum BattleStateType { Start, PlayerTurn, EnemyTurn, Won, Lose}
+public class BattleManager : MonoBehaviour, ISaveable
 {
     private BattleStateType currentState;
     private Dictionary<BattleStateType, BattleState> battleStates;
@@ -13,9 +14,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private List<UnitController> alivePlayerUnits = new List<UnitController>();
     public UnitController ClickedUnit { get; private set; }
 
-    [SerializeField] private List<UnitBaseData> enemyUnits;
     [SerializeField] private List<UnitController> aliveEnemyUnits = new List<UnitController>();
-    [SerializeField] private List<UnitController> unitsOnBattleground = new List<UnitController>();
+    [SerializeField] private List<UnitData> enemyUnitDatas = new List<UnitData>();
+    private List<UnitController> enemyUnitsCreated = new List<UnitController>();
     [Range(1, 3)]
     [SerializeField] private int enemyCount;
 
@@ -26,13 +27,17 @@ public class BattleManager : MonoBehaviour
     public BattleHUD BattleHUD => battleHUD;
 
     public bool IsBattleOn { get; private set; }
+    public bool IsInitialised { get; private set; }
+
+    [SerializeField] private EnemyUnitCreator enemyUnitCreator;
+    public bool WaitingForInput { get; set; } = true;
+    public bool IsPlayerTurn { get; set; } = true;
 
     private void Awake()
     {
         battleStates = new Dictionary<BattleStateType, BattleState>(4)
         {
             { BattleStateType.Start, new StartState(this) },
-            { BattleStateType.Ready, new ReadyState(this) },
             { BattleStateType.PlayerTurn, new PlayerTurnState(this) },
             { BattleStateType.EnemyTurn, new EnemyTurnState(this) },
             { BattleStateType.Won, new WonState(this) },
@@ -42,39 +47,63 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-        SetupBattle(GameDataManager.Instance.GetSelectedUnits());
+        SetupBattle();
     }
 
-    private void SetupBattle(List<string> selectedUnits)
+    private void SetupBattle()
     {
+        List<Unit> selectedUnits = GameDataManager.Instance.GetSelectedUnits();
+
         for (int i = 0; i < selectedUnits.Count; i++)
         {
-            var unit = Instantiate(GameDataManager.Instance.GetUnitByName(selectedUnits[i]).UnitPrefab, playerSpawnPositions[i], Quaternion.identity);
+            var unit = selectedUnits[i];
+            var unitController = unit.CreateUnitObject(playerSpawnPositions[i], Quaternion.identity);
 
-            if (!unit.Init(GameDataManager.Instance.GetUnitByName(selectedUnits[i])))
+            if (!unit.IsAlive)
             {
-                unitsOnBattleground.Add(unit);
                 continue;
             }
 
-            alivePlayerUnits.Add(unit);
-            unitsOnBattleground.Add(unit);
-            unit.AssignTargetUnits(aliveEnemyUnits);
-            unit.Clicked = UnitClicked;
-            unit.UnitDiedEvent += UnitHasDied;
+            alivePlayerUnits.Add(unitController);
+            unitController.AssignTargetUnits(aliveEnemyUnits);
+            unitController.Clicked = UnitClicked;
+            unitController.UnitDiedEvent += UnitHasDied;
         }
 
         for (int i = 0; i < enemyCount; i++)
         {
-            var unit = Instantiate(enemyUnits[i].UnitPrefab, enemySpawnPositions[i], Quaternion.identity);
-            unit.Init(GameDataManager.Instance.GetUnitByName(enemyUnits[i].Data.Name));
-            aliveEnemyUnits.Add(unit);
-            unitsOnBattleground.Add(unit);
-            unit.AssignTargetUnits(alivePlayerUnits);
-            unit.FlipX();
-            unit.UnitDiedEvent += UnitHasDied;
+            Unit unit;
+
+            if (!IsInitialised)
+            {
+                unit = enemyUnitCreator.GetEnemyUnit();
+            }
+            else
+            {
+                unit = enemyUnitCreator.GetEnemyUnit(enemyUnitDatas[i]);
+            }
+
+
+            var unitController = unit.CreateUnitObject(enemySpawnPositions[i], Quaternion.identity);
+
+            if (!unit.IsAlive)
+            {
+                enemyUnitsCreated.Add(unitController);
+                continue;
+            }
+
+            aliveEnemyUnits.Add(unitController);
+            enemyUnitsCreated.Add(unitController);
+            unitController.AssignTargetUnits(alivePlayerUnits);
+            unitController.FlipX();
+            unitController.UnitDiedEvent += UnitHasDied;
         }
 
+        StartBattle();
+    }
+
+    private void StartBattle()
+    {
         SetState(BattleStateType.Start);
         IsBattleOn = true;
         MessagingSystem.Instance.Dispatch(new BattleStartEvent());
@@ -88,11 +117,11 @@ public class BattleManager : MonoBehaviour
 
     private void UnitClicked(UnitController clickedUnit)
     {
-        if (currentState != BattleStateType.Ready)
+        if (currentState != BattleStateType.PlayerTurn || !WaitingForInput)
             return;
 
+        WaitingForInput = false;
         ClickedUnit = clickedUnit;
-        SetState(BattleStateType.PlayerTurn);
     }
 
     public UnitController GetRandomEnemyUnit()
@@ -166,21 +195,42 @@ public class BattleManager : MonoBehaviour
     void SetBattleVictory()
     {
         SetState(BattleStateType.Won);
+        MessagingSystem.Instance.Dispatch(new BattleEndEvent(alivePlayerUnits));
         MessagingSystem.Instance.Dispatch(new BattleWonEvent());
-
-        foreach (UnitController unit in alivePlayerUnits)
-            unit.AddXP();
-
-        foreach (UnitController unit in unitsOnBattleground)
-            unit.ResetHealth();
     }
 
     void SetBattleDefeat()
     {
         SetState(BattleStateType.Lose);
+        MessagingSystem.Instance.Dispatch(new BattleEndEvent(alivePlayerUnits));
         MessagingSystem.Instance.Dispatch(new BattleLostEvent());
+    }
 
-        foreach (UnitController unit in unitsOnBattleground)
-            unit.ResetHealth();
+    public JToken CaptureState()
+    {
+        var battleData = new BattleData();
+        battleData.IsPlayerTurn = IsPlayerTurn;
+
+        for(int i = 0; i < enemyUnitsCreated.Count; i++)
+        {
+            enemyUnitDatas.Add(enemyUnitsCreated[i].GetData());
+        }
+
+        battleData.EnemyUnits = enemyUnitDatas;
+        return JToken.FromObject(battleData);
+    }
+
+    public void RestoreFromState(JToken state)
+    {
+        if (IsInitialised)
+            return;
+
+        IsInitialised = true;
+
+        var battleData = state.ToObject<BattleData>();
+
+        IsPlayerTurn = battleData.IsPlayerTurn;
+
+        enemyUnitDatas = battleData.EnemyUnits;
     }
 }

@@ -8,4 +8,6 @@ public interface ISaveable
     public JToken CaptureState();
 
     public void RestoreFromState(JToken state);
+
+    public bool IsInitialised { get; }
 }

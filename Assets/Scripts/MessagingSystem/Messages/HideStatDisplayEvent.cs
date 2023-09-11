@@ -1,6 +1,6 @@
 namespace MyMessagingSystem
 {
-    public struct BattleWonEvent
+    public struct HideStatDisplayEvent
     {
     }
 }

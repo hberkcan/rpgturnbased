@@ -16,7 +16,9 @@ MonoBehaviour:
   UnitIcon: {fileID: 3926609367448832269, guid: 7bd2d7b426bd9be4b8c9fc5bf950bf11, type: 3}
   Data:
     Name: Rogue2
+    UnitType: Rogue2
     MaxHealth: 100
     CurrentHealth: 100
-    AttackPower: 35
+    AttackPower: 20
     Experience: 0
+    IsUnlocked: 1

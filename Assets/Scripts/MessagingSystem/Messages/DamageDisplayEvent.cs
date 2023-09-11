@@ -4,15 +4,15 @@ namespace MyMessagingSystem
 {
     public struct DamageDisplayEvent
     {
-        public int damageAmount;
-        public Transform displayLocation;
-        public Color damageColor;
+        public int DamageAmount;
+        public Transform DisplayLocation;
+        public Color DamageColor;
 
         public DamageDisplayEvent(int damageAmount, Transform displayLocation, Color damageColor)
         {
-            this.damageAmount = damageAmount;
-            this.displayLocation = displayLocation;
-            this.damageColor = damageColor;
+            DamageAmount = damageAmount;
+            DisplayLocation = displayLocation;
+            DamageColor = damageColor;
         }
     }
 }

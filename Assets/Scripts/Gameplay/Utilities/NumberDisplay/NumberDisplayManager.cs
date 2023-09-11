@@ -47,6 +47,6 @@ public class NumberDisplayManager : MonoBehaviour, IMessagingSubscriber<DamageDi
 
     public void OnReceiveMessage(DamageDisplayEvent message)
     {
-        ShowNumber((int)message.damageAmount, message.displayLocation, message.damageColor);
+        ShowNumber((int)message.DamageAmount, message.DisplayLocation, message.DamageColor);
     }
 }

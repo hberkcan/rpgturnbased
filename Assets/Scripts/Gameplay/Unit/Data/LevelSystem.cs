@@ -8,6 +8,7 @@ public class LevelSystem
     public int CurrentLevel { get; private set; } = 1;
     public int CurrentExperience { get; private set; } = 0;
     public int XpRequiredForNextLevel => GetXPRequiredForNextLevel();
+    public double XPPercentage => GetXPPercentage();
 
     private readonly int offset = 5;
     private readonly float slope = 5f;
@@ -20,7 +21,7 @@ public class LevelSystem
 
         CurrentExperience += amount;
 
-        int newLevel = Mathf.Min(Mathf.FloorToInt((CurrentExperience - offset) / slope) + 1, levelCap);
+        int newLevel = Mathf.Min(Mathf.FloorToInt((CurrentExperience - offset) / slope) + 2, levelCap);
         bool leveledUp = newLevel != CurrentLevel;
 
         CurrentLevel = newLevel;
@@ -51,5 +52,12 @@ public class LevelSystem
     {
         CurrentLevel = 1;
         CurrentExperience = 0;
+    }
+
+    public double GetXPPercentage()
+    {
+        double x = CurrentExperience / slope;
+        x -= Math.Floor(x);
+        return Math.Round(x, 1) * 100;
     }
 }

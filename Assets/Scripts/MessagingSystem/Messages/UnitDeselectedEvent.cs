@@ -3,11 +3,11 @@ namespace MyMessagingSystem
 {
     public struct UnitDeselectedEvent
     {
-        public Unit unit;
+        public Unit Unit;
 
         public UnitDeselectedEvent(Unit unit)
         {
-            this.unit = unit;
+            Unit = unit;
         }
     }
 }
