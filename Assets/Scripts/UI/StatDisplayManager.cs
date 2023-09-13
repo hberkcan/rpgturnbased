@@ -6,7 +6,7 @@ using MyMessagingSystem;
 
 public class StatDisplayManager : MonoBehaviour, IMessagingSubscriber<StatDisplayEvent>, IMessagingSubscriber<HideStatDisplayEvent>
 {
-    [SerializeField] private GameObject canvas;
+    [SerializeField] private Canvas canvas;
     [SerializeField] private RectTransform panelRectTr;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI healthText;
@@ -34,19 +34,24 @@ public class StatDisplayManager : MonoBehaviour, IMessagingSubscriber<StatDispla
         levelText.text = $"Lvl: {message.UnitData.CurrentLevel}";
         experienceText.text = $"Exp: %{message.UnitData.XpPercentage}";
 
+        canvas.gameObject.SetActive(true);
         SetPositionWithOffset(message.ScreenPos);
-        canvas.SetActive(true);
     }
 
     public void OnReceiveMessage(HideStatDisplayEvent message)
     {
-        canvas.SetActive(false);
+        canvas.gameObject.SetActive(false);
     }
 
     private void SetPositionWithOffset(Vector2 screenPos)
     {
-        Vector2 offset = new Vector2(Screen.width * 0.05f, Screen.height * 0.05f);
+        Vector2 offset = new Vector2(75, 75);
         panelRectTr.pivot = Vector2.zero;
-        panelRectTr.anchoredPosition = screenPos + offset;
+
+        Vector2 apos = (screenPos / canvas.scaleFactor) + offset;
+        float ypos = apos.y;
+        ypos = Mathf.Clamp(ypos, 0, Screen.height / canvas.scaleFactor - panelRectTr.sizeDelta.y);
+        apos.y = ypos;
+        panelRectTr.anchoredPosition = apos;
     }
 }

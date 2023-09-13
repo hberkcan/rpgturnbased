@@ -17,10 +17,14 @@ public class SavingWrapper : MonoBehaviour
         savingSystem = GetComponent<SavingSystem>();
     }
 
-    //private void Start()
-    //{
-    //    ContinueGame();
-    //}
+    private void Start()
+    {
+        //ContinueGame();
+
+#if !UNITY_EDITOR
+        Debug.Log("ANROID");
+#endif
+    }
 
     private void OnEnable()
     {
@@ -33,6 +37,14 @@ public class SavingWrapper : MonoBehaviour
         SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
         SceneManager.sceneUnloaded -= SceneManager_sceneUnloaded;
     }
+
+#if !UNITY_EDITOR
+    private void OnApplicationPause(bool pause)
+    {
+        if (saveOn)
+            Save();
+    }
+#endif
 
     private void OnApplicationQuit()
     {

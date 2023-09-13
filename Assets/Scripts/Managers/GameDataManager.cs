@@ -100,6 +100,10 @@ public class GameDataManager : MonoBehaviour, ISaveable, IMessagingSubscriber<Un
         }
 
         selectedUnitsNames = gameData.SelectedUnits;
+
+        foreach (string name in selectedUnitsNames)
+            selectedUnits.Add(GetUnitByName(name));
+
         IsBattleActive = gameData.IsBattleActive;
         battleCount = gameData.BattleCount;
     }

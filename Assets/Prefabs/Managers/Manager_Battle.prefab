@@ -493,7 +493,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alivePlayerUnits: []
   aliveEnemyUnits: []
-  unitsOnBattleground: []
   enemyUnitDatas: []
   enemyCount: 1
   playerSpawnPositions:
@@ -526,17 +525,17 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0.11111111
-      outSlope: 0.11111111
+      inSlope: 0.33333334
+      outSlope: 0.33333334
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 9
-      value: 2
-      inSlope: 0.11111111
-      outSlope: 0.11111111
+      value: 4
+      inSlope: 0.33333334
+      outSlope: 0.33333334
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -550,17 +549,17 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 0.11111111
-      outSlope: 0.11111111
+      inSlope: 0.33333334
+      outSlope: 0.33333334
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 9
-      value: 2
-      inSlope: 0.11111111
-      outSlope: 0.11111111
+      value: 4
+      inSlope: 0.33333334
+      outSlope: 0.33333334
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -662,7 +661,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

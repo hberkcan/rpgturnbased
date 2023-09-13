@@ -113,13 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104e840ec3f6b714d95e6ba6139c0032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitDatas:
-  - {fileID: 11400000, guid: 00ce9d479b48ba549adee0d3b6f8a818, type: 2}
-  - {fileID: 11400000, guid: 86ae3829e9528ba45a81592e6222d153, type: 2}
-  - {fileID: 11400000, guid: 3ec8a65cc9423804a8cc124a60a09cf3, type: 2}
-  - {fileID: 11400000, guid: 5d825766ed0a6b248854006abfb19dd9, type: 2}
-  - {fileID: 11400000, guid: bd82d0cce5e481d468d75527cfffd47d, type: 2}
-  - {fileID: 11400000, guid: cf3c70633c4adb2479e52a3d9938325f, type: 2}
   unitUIPrefab: {fileID: 8075688905662827468, guid: d9c1c3786d3316f47a9018e0b5e90144, type: 3}
   unitSelectParent: {fileID: 2857520005676589488}
   startButton: {fileID: 7451155911015909038}
@@ -217,7 +210,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
